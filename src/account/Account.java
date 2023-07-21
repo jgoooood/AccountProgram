@@ -45,9 +45,12 @@ public class Account {
 		this.memo = memo;
 	}
 	
+	
 	@Override
 	public String toString() {
-		return "날짜 : " + getDate() + "%n금액 : " + getMoney() + "%n내용 : " + getMemo()+ "%n";
+		return "Account [inOut=" + inOut + ", date=" + date + ", money=" + money + ", memo=" + memo + "]";
 	}
+	
+	
 	
 }

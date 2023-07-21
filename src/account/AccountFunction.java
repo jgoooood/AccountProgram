@@ -6,41 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class AccountFunction {
-	// ArrayList 사용
-	List<Account> incomeList;
-	List<Account> spendList;
 
-	private int sumIncome; //수입합계
-	private int sumSpending; //지출합계
-	
-	public AccountFunction() {
-		//ArrayList
-		incomeList = new ArrayList<Account>();
-		spendList = new ArrayList<Account>();
-		
-		sumIncome = 0;
-		sumSpending = 0;
-	}
-	
-	
-	// 메뉴출력
-	public int printMenu() {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("");
-		System.out.println("========= 수입/지출 기록 프로그램 ========");
-		System.out.println("1. 내역 등록");
-		System.out.println("2. 수입 내역 조회");
-		System.out.println("3. 지출 내역 조회");
-		System.out.println("4. 등록 내역 검색");
-		System.out.println("5. 등록 내역 삭제");
-		System.out.println("6. 합계금액 및 잔액 조회");
-		System.out.println("7. 프로그램 종료");
-		System.out.println();
-		System.out.print("메뉴 선택 : ");
-		int choice = sc.nextInt();
-		System.out.println();
-		return choice;
-	}
 	
 	// ============================================== 메뉴 메소드 ============================================
 	// 1. 내역 등록
