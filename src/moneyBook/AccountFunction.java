@@ -1,4 +1,4 @@
-package account;
+package moneyBook;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -6,7 +6,20 @@ import java.util.List;
 import java.util.Scanner;
 
 public class AccountFunction {
+	List<Account> incomeList;
+	List<Account> spendList;
 
+	private int sumIncome; //수입합계
+	private int sumSpending; //지출합계
+
+	public AccountFunction() {
+		//ArrayList
+		incomeList = new ArrayList<Account>();
+		spendList = new ArrayList<Account>();
+
+		sumIncome = 0;
+		sumSpending = 0;
+	}
 	
 	// ============================================== 메뉴 메소드 ============================================
 	// 1. 내역 등록

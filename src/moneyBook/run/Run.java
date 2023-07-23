@@ -1,11 +1,11 @@
-package account.run;
+package moneyBook.run;
 
-import account.view.AccountView;
+import moneyBook.view.MoneyView;
 
 public class Run {
 	
 	public static void main(String[] args) {
-		AccountView view = new AccountView();
+		MoneyView view = new MoneyView();
 		view.startProgram();
 	}
 

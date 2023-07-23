@@ -1,4 +1,4 @@
-package account;
+package moneyBook;
 
 public class Account {
 	//멤버변수
