@@ -112,7 +112,7 @@ public class MoneyDAO {
 
 	public List<MoneyBook> selectMemo(String memo) {
 		//SELECT * FROM MONEY_TBL WHERE MEMO IN ('경조사비');
-		String query = "SELECT * FROM MONEY_TBL WHERE MEMO IN ('"+memo+"')";
+		String query = "SELECT * FROM MONEY_TBL WHERE MEMO IN '"+memo+"'";
 		List<MoneyBook> list = new ArrayList<MoneyBook>();
 		Connection conn = null;
 		Statement stmt = null;
@@ -144,5 +144,93 @@ public class MoneyDAO {
 		}
 		return list;
 	}
+
+
+	public int deleteInMoney(MoneyBook deleteInInfo) {
+		String query = "DELETE FROM MONEY_TBL WHERE CATEGORY = ? AND INOUT_DATE = ? AND IN_MONEY = ?";
+		int result = -1;
+		PreparedStatement pstmt = null;
+		Connection conn = null;
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "MONEY", "MONEY");
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, deleteInInfo.getCategory());
+			pstmt.setString(2, deleteInInfo.getDate());
+			pstmt.setInt(3, deleteInInfo.getInMoney());
+			result = pstmt.executeUpdate();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
+
+	public int deleteOutMoney(MoneyBook deleteOutInfo) {
+		String query = "DELETE FROM MONEY_TBL WHERE CATEGORY = ? AND INOUT_DATE = ? AND OUT_MONEY = ?";
+		int result = -1;
+		PreparedStatement pstmt = null;
+		Connection conn = null;
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "MONEY", "MONEY");
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, deleteOutInfo.getCategory());
+			pstmt.setString(2, deleteOutInfo.getDate());
+			pstmt.setInt(3, deleteOutInfo.getOutMoney());
+			result = pstmt.executeUpdate();
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
+
+	public void selectSumMoney() {
+		String query = "SELECT SUM(IN_MONEY) AS sumInMoney, SUM(OUT_MONEY) AS sumOutMoney, (SUM(IN_MONEY) - SUM(OUT_MONEY)) AS sumBalance FROM MONEY_TBL";
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "MONEY", "MONEY");
+			Statement stmt = conn.createStatement();
+			ResultSet rset = stmt.executeQuery(query);
+			if(rset.next()) {
+				int sumInMoney = rset.getInt("sumInMoney");			
+				int sumOutMoney = rset.getInt("sumOutMoney");			
+				int sumBalance = rset.getInt("sumBalance");
+				
+				printSum(sumInMoney, sumOutMoney, sumBalance);
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	private void printSum(int sumInMoney, int sumOutMoney, int sumBalance) {
+		System.out.println("================ 합 계 액 ===============");
+		System.out.printf("수입 합계 : %d원%n지출 합계 : %d원%n잔     액 : %d원%n"
+				, sumInMoney ,sumOutMoney, sumBalance);		
+	}
+
+
+
 
 }

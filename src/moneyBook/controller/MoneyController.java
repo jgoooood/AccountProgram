@@ -27,6 +27,20 @@ public class MoneyController {
 		return list;
 	}
 
+	public int deleteInMoney(MoneyBook deleteInInfo) {
+		int result = dao.deleteInMoney(deleteInInfo);
+		return result;
+	}
+
+	public int deleteOutMoney(MoneyBook deleteOutInfo) {
+		int result = dao.deleteOutMoney(deleteOutInfo);
+		return result;
+	}
+
+	public void selectSumMoney() {
+		dao.selectSumMoney();
+	}
+
 
 	
 

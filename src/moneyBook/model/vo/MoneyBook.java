@@ -15,7 +15,8 @@ public class MoneyBook {
 
 
 	//getter setter
-	
+
+
 	public String getDate() {
 		return date;
 	}
