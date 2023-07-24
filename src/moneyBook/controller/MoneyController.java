@@ -22,6 +22,11 @@ public class MoneyController {
 		return list;
 	}
 
+	public List<MoneyBook> selectMemo(String memo) {
+		List<MoneyBook> list = dao.selectMemo(memo);
+		return list;
+	}
+
 
 	
 

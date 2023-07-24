@@ -1,16 +1,16 @@
 package moneyBook.view;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Scanner;
 
+import moneyBook.Account;
 import moneyBook.controller.MoneyController;
 import moneyBook.model.vo.MoneyBook;
 
 public class MoneyView {
-	MoneyBook mb = null;
-	List<MoneyBook> outList = null; 
 	private MoneyController controller= null;
+	
 	int balance = 0;
 	int money = 0;
 	String date = "";
@@ -18,13 +18,12 @@ public class MoneyView {
 	String memo = "";
 	
 	public MoneyView() {
-		mb = new MoneyBook();
 		controller = new MoneyController();
-		outList = new ArrayList<MoneyBook>();	
 	}
 	
 	
 	public void startProgram() {
+		MoneyBook mb = null;
 		List<MoneyBook> list = null; 
 		finish:
 			while(true) {
@@ -51,7 +50,11 @@ public class MoneyView {
 					printMoney(list, "지출");
 					break;
 				// 등록 내역의 내용 검색
-				case 4:	break;
+				case 4:	
+					memo = serchMemo();
+					list = controller.selectMemo(memo);
+					printListByMemo(list);
+					break;
 				// 내역 삭제
 				case 5: break;
 				// 수입,지출 합계 출력
@@ -69,6 +72,30 @@ public class MoneyView {
 			}
 	}
 	
+
+	private void printListByMemo(List<MoneyBook> list) {
+		System.out.println("---------------- 결과 --------------------");
+		//System.out.printf("구분\t날짜\t내용\t수입금액\t지출금액\t잔액%n");
+		for(MoneyBook mb : list) {
+			System.out.printf("구분 : %s%n"
+					,mb.getCategory());
+//					,mb.getDate()
+//					,mb.getMemo()
+//					,mb.getInMoney()
+//					,mb.getOutMoney()
+//					,mb.getBalance());
+		}
+	}
+
+
+	private String serchMemo() {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("검색할 메모 내용 : ");
+		sc.nextLine();
+		memo = sc.nextLine();
+		return memo;
+	}
+
 
 	private void printMsg(String message) {
 		System.out.println(message);
@@ -153,12 +180,13 @@ public class MoneyView {
 		sc.nextLine();
 		memo = sc.nextLine();
 		
-		mb = addInfo(category, money, date, memo);
+		MoneyBook mb = addInfo(category, money, date, memo);
 		
 		return mb;
 	}
 	
 	private MoneyBook addInfo(String category, int money, String date, String memo) {
+		MoneyBook mb = new MoneyBook();
 		if(category.equals("수입")) {
 			mb.setInMoney(money);
 			mb.setOutMoney(0);
